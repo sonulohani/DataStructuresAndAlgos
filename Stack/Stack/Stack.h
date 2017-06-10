@@ -41,6 +41,6 @@ namespace DataStructuresAndAlgos
 		
 	private:
 		node *top = nullptr;
-		Stack::node * getNodePrevToNodeSpecified(Stack::node * pNode = nullptr) const;
+		Stack::node * getLastNode() const;
 	};
 }

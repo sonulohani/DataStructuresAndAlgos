@@ -38,7 +38,7 @@ namespace DataStructuresAndAlgos
 		}
 		else
 		{
-			Stack::node *pLastNode = getNodePrevToNodeSpecified();
+			Stack::node *pLastNode = getLastNode();
 			Stack::node *newNode = new Stack::node;
 			newNode->data = data;
 			newNode->link = nullptr;
@@ -54,19 +54,24 @@ namespace DataStructuresAndAlgos
 			{
 				throw "Stack is empty\n";
 			}
-			Stack::node *pLastNode = getNodePrevToNodeSpecified();
-			if (pLastNode != top)
+
+			Stack::node *prev = nullptr;
+			Stack::node *firstNode = top;
+			while (firstNode->link != nullptr)
 			{
-				Stack::node *pPrevToLastNode = getNodePrevToNodeSpecified(pLastNode);
-				pPrevToLastNode->link = nullptr;
+				prev = firstNode;
+				firstNode = firstNode->link;
 			}
-			std::cout << "Deleted element is:- " << pLastNode->data << std::endl;
-			bool isTop = ( top == pLastNode );
-			delete pLastNode;
-			pLastNode = nullptr;
+			std::cout << "Deleted element is:- " << firstNode->data << std::endl;
+			bool isTop = (top == firstNode);
+			delete firstNode;
+			if (prev)
+			{
+				prev->link = nullptr;
+			}
 			if (isTop)
 			{
-				top = pLastNode;
+				top = nullptr;
 			}
 		}
 		catch (char* msg)
@@ -102,10 +107,10 @@ namespace DataStructuresAndAlgos
 		return top == nullptr;
 	}
 
-	Stack::node * Stack::getNodePrevToNodeSpecified(Stack::node *pNode) const
+	Stack::node * Stack::getLastNode() const
 	{
 		Stack::node *lastNode = top;
-		while (lastNode->link != pNode)
+		while (lastNode->link != nullptr)
 		{
 			lastNode = lastNode->link;
 		}
